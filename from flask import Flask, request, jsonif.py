@@ -23,8 +23,11 @@ def json_formatter(data):
     return formatted_json
 
 def yaml_to_json(data):
-    json_data = json.dumps(yaml.safe_load(data), indent=4)
-    return json_data
+    try:
+        json_data = json.dumps(yaml.safe_load(data), indent=4)
+        return json_data
+    except yaml.YAMLError as e:
+        return f"Error parsing YAML: {e}"
 
 def timestamp_to_date(timestamp):
     date = datetime.fromtimestamp(int(timestamp)).strftime('%Y-%m-%d %H:%M:%S')
