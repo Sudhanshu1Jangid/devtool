@@ -5,7 +5,7 @@ import yaml
 from datetime import datetime
 
 def csv_to_json(csv_file_path):
-    with open(csv_file_path, 'r') as csv_file:
+    with open(csv_file_path, 'r', encoding='utf-8') as csv_file:
         csv_reader = csv.DictReader(csv_file)
         json_data = json.dumps([row for row in csv_reader], indent=4)
         return json_data
@@ -23,8 +23,11 @@ def json_formatter(data):
     return formatted_json
 
 def yaml_to_json(data):
-    json_data = json.dumps(yaml.safe_load(data), indent=4)
-    return json_data
+    try:
+        json_data = json.dumps(yaml.safe_load(data), indent=4)
+        return json_data
+    except yaml.YAMLError as e:
+        return f"Error parsing YAML: {e}"
 
 def timestamp_to_date(timestamp):
     date = datetime.fromtimestamp(int(timestamp)).strftime('%Y-%m-%d %H:%M:%S')
