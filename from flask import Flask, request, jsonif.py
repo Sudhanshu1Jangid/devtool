@@ -5,7 +5,7 @@ import yaml
 from datetime import datetime
 
 def csv_to_json(csv_file_path):
-    with open(csv_file_path, 'r') as csv_file:
+    with open(csv_file_path, 'r', encoding='utf-8') as csv_file:
         csv_reader = csv.DictReader(csv_file)
         json_data = json.dumps([row for row in csv_reader], indent=4)
         return json_data
